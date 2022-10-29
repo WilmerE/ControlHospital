@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package hospital;
-import db_connection.Conection;
 /**
  *
  * @author wilme
@@ -15,7 +14,7 @@ public class Hospital {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Conection conn = new Conection();
+        ModelUsers conn = new ModelUsers();
         conn.getConexion();
     }
     

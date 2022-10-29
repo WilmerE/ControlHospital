@@ -4,9 +4,6 @@
  */
 package vistas;
 import hospital.LoginClass;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author wilme
@@ -95,12 +92,8 @@ public class Login extends javax.swing.JFrame {
         String username = txt_username.getText().trim();
         String pass = txt_pass.getText().trim();
         LoginClass oauth = new LoginClass();
-        try {
-            oauth.auth(username, pass);
-            this.setVisible(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        oauth.auth(username, pass);
+        this.setVisible(false);
     }//GEN-LAST:event_btn_loginActionPerformed
 
     /**

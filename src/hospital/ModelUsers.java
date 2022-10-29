@@ -4,10 +4,12 @@
  */
 package hospital;
 
-import db_connection.Conection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.awt.HeadlessException;
 import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,20 +17,40 @@ import javax.swing.JOptionPane;
  * @author wilme
  */
 public class ModelUsers {
+    private final String HOST = "localhost";
+    private final String PUERTO = "5432";
+    private final String DB = "hospital";
+    private final String USER = "postgres";
+    private final String PASSWORD = "root";
     
-    Connection conn = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
+    private static Connection conn;
+    private static Statement state;
+    private static ResultSet rs;
     
-    public ResultSet selectAllUser(){
-        String query = "SELECT * FROM user WHERE rol = 2";
-        try{
-            pst = conn.prepareStatement(query);
-            rs = pst.executeQuery();
-        }catch(Exception e){
+    public Connection getConexion(){
+        
+        try {
+            Class.forName("org.postgresql.Driver");
+            String url ="jdbc:postgresql://"+HOST+":"+PUERTO+"/"+DB;
+            conn = DriverManager.getConnection(url, USER, PASSWORD);
+            //JOptionPane.showMessageDialog(null, "conexion exitosa");
+        } catch (HeadlessException | ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         
+        return conn;
+    }
+    
+    public static ResultSet verificar(String sql)throws SQLException{
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        rs = state.executeQuery(sql);
+        return rs;
+    }
+    
+    public static ResultSet selectAllUser()throws SQLException{
+        String query = "SELECT * FROM public.user WHERE rol = 2";
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        rs = state.executeQuery(query);
         return rs;
     }
 }

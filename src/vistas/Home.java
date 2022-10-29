@@ -4,6 +4,10 @@
  */
 package vistas;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author wilme
@@ -233,9 +237,13 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void btn_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registroActionPerformed
-        // TODO add your handling code here:
-        Registro rg = new Registro();
-        rg.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            Registro rg = new Registro();
+            rg.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_registroActionPerformed
 
     /**

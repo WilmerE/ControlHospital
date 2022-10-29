@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package hospital;
-import db_connection.Conection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -24,14 +23,14 @@ public class LoginClass {
     private String nombres;
     private int rol;
     
-    Conection conn = new Conection();
+    ModelUsers userc = new ModelUsers();
     
-    public void auth(String username, String pass) throws SQLException{
+    public void auth(String username, String pass){
         pass_crypt = getMd5(pass);
         try{
-            conn.getConexion();
+            userc.getConexion();
             this.query = "SELECT id_user, genero, nombres, rol FROM \"user\" WHERE \"username\" = '"+username+"' AND \"pass\" = '"+pass_crypt+"' AND \"status\" = true";
-            this.rs = Conection.verificar(this.query);
+            this.rs = userc.verificar(this.query);
             
             while (this.rs.next()) {
                 this.id_user = rs.getInt(1);
