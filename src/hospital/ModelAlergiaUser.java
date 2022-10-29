@@ -44,6 +44,6 @@ public class ModelAlergiaUser {
     public void insert(int id_user, int id_alergia)throws SQLException{
         String query = "INSERT INTO public.user_alergia(id_user, id_alergia) VALUES ("+id_user+",'"+id_alergia+"')";
         state = conn.createStatement();
-        state.executeQuery(query);
+        state.executeUpdate(query);
     }
 }

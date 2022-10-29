@@ -47,10 +47,9 @@ public class ModelEnfermedad {
         return rs;
     }
     
-    public static ResultSet insert(String nombre)throws SQLException{
+    public static void insert(String nombre)throws SQLException{
         String query = "INSERT INTO public.enfermedad(nombre) VALUES ('"+nombre+"')";
         state = conn.createStatement();
-        rs = state.executeQuery(query);
-        return rs;
+        state.executeUpdate(query);
     }
 }

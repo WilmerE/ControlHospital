@@ -42,8 +42,8 @@ public class ModelLenguaUser {
     }
     
     public void insert(int id_user, int id_lengua)throws SQLException{
-        String query = "INSERT INTO public.user_lengua(id_user, id_alergia) VALUES ("+id_user+",'"+id_lengua+"')";
+        String query = "INSERT INTO public.user_lengua(id_user, id_lengua) VALUES ("+id_user+",'"+id_lengua+"')";
         state = conn.createStatement();
-        state.executeQuery(query);
+        state.executeUpdate(query);
     }
 }

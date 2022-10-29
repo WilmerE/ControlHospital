@@ -57,8 +57,8 @@ public class ModelEmail {
     }
     
     public void insert(int id_user, String email)throws SQLException{
-        String query = "INSERT INTO public.email(id_user, numero) VALUES ("+id_user+",'"+email+"')";
+        String query = "INSERT INTO public.email(id_user, email) VALUES ("+id_user+",'"+email+"')";
         state = conn.createStatement();
-        state.executeQuery(query);
+        state.executeUpdate(query);
     }
 }

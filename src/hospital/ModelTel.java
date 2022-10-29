@@ -59,6 +59,6 @@ public class ModelTel {
     public void insert(int id_user, String numero)throws SQLException{
         String query = "INSERT INTO public.telefono(id_user, numero) VALUES ("+id_user+",'"+numero+"')";
         state = conn.createStatement();
-        rs = state.executeQuery(query);
+        state.executeUpdate(query);
     }
 }
