@@ -40,16 +40,26 @@ public class ModelGrupo {
         return conn;
     }
     
-    public static ResultSet selectAllGrupos()throws SQLException{
+    public static ResultSet selectAll()throws SQLException{
         String query = "SELECT * FROM public.grupo_etnico";
         state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
         rs = state.executeQuery(query);
         return rs;
     }
     
-    public static void insert(String nombre)throws SQLException{
-        String query = "INSERT INTO public.grupo_etnico(nombre) VALUES ('"+nombre+"')";
+    public int insert(String nombre)throws SQLException{
+        String query = "INSERT INTO public.grupo_etnico(nombre) VALUES ('"+nombre+"') RETURNING id_grupo_etnico";
         state = conn.createStatement();
-        state.executeQuery(query);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
+    }
+    
+    public int getIdbyName(String name) throws SQLException{
+        String query = "SELECT * FROM public.grupo_etnico WHERE nombre = '"+name+"'";
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
     }
 }

@@ -47,9 +47,19 @@ public class ModelNivel {
         return rs;
     }
     
-    public static void insert(String nombre)throws SQLException{
-        String query = "INSERT INTO public.nivel_escolar(nombre) VALUES ('"+nombre+"')";
+    public int insert(String nombre)throws SQLException{
+        String query = "INSERT INTO public.nivel_escolar(nombre) VALUES ('"+nombre+"') RETURNING id_nivel_escolar";
         state = conn.createStatement();
-        state.executeQuery(query);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
+    }
+    
+    public int getIdbyName(String name) throws SQLException{
+        String query = "SELECT * FROM public.nivel_escolar WHERE nombre = '"+name+"'";
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
     }
 }

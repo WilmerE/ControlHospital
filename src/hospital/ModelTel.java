@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author wilme
  */
-public class ModelDepartamento {
+public class ModelTel {
     private final String HOST = "localhost";
     private final String PUERTO = "5432";
     private final String DB = "hospital";
@@ -28,6 +28,7 @@ public class ModelDepartamento {
     private static ResultSet rs;
     
     public Connection getConexion(){
+        
         try {
             Class.forName("org.postgresql.Driver");
             String url ="jdbc:postgresql://"+HOST+":"+PUERTO+"/"+DB;
@@ -41,25 +42,23 @@ public class ModelDepartamento {
     }
     
     public static ResultSet selectAll()throws SQLException{
-        String query = "SELECT * FROM public.departamento";
+        String query = "SELECT * FROM public.telefono";
         state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
         rs = state.executeQuery(query);
         return rs;
     }
     
-    public int insert(String nombre)throws SQLException{
-        String query = "INSERT INTO public.departamento(nombre) VALUES ('"+nombre+"') RETURNING id_departamento";
-        state = conn.createStatement();
+    public int getIdbyName(String tel) throws SQLException{
+        String query = "SELECT * FROM public.telefono WHERE nombre = '"+tel+"'";
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
         rs = state.executeQuery(query);
         rs.next();
         return rs.getInt(1);
     }
     
-    public int getIdbyName(String name) throws SQLException{
-        String query = "SELECT * FROM public.departamento WHERE nombre = '"+name+"'";
-        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+    public void insert(int id_user, String numero)throws SQLException{
+        String query = "INSERT INTO public.telefono(id_user, numero) VALUES ("+id_user+",'"+numero+"')";
+        state = conn.createStatement();
         rs = state.executeQuery(query);
-        rs.next();
-        return rs.getInt(1);
     }
 }

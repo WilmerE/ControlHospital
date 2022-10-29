@@ -47,9 +47,19 @@ public class ModelLengua {
         return rs;
     }
     
-    public static void insert(String nombre)throws SQLException{
-        String query = "INSERT INTO public.lengua(nombre) VALUES ('"+nombre+"')";
+    public int insert(String nombre)throws SQLException{
+        String query = "INSERT INTO public.lengua(nombre) VALUES ('"+nombre+"') RETURNING id_lengua";
         state = conn.createStatement();
-        state.executeQuery(query);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
+    }
+    
+    public int getIdbyName(String name) throws SQLException{
+        String query = "SELECT * FROM public.lengua WHERE nombre = '"+name+"'";
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
     }
 }

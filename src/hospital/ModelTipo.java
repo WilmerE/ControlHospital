@@ -40,16 +40,29 @@ public class ModelTipo {
         return conn;
     }
     
-    public static ResultSet selectAllTipos()throws SQLException{
+    public static ResultSet selectAll()throws SQLException{
         String query = "SELECT * FROM public.tipo_sangre";
         state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
         rs = state.executeQuery(query);
         return rs;
     }
     
-    public static void insert(String nombre)throws SQLException{
-        String query = "INSERT INTO public.tipo_sangre(nombre) VALUES ('"+nombre+"')";
+    public int insert(String nombre)throws SQLException{
+        String query = "INSERT INTO public.tipo_sangre(nombre) VALUES ('"+nombre+"') RETURNING id_tipo_sangre";
         state = conn.createStatement();
-        state.executeQuery(query);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
+    }
+    
+    public int getIdbyName(String name) throws SQLException{
+        int id = 0;
+        String query = "SELECT * FROM public.tipo_sangre WHERE nombre = '"+name+"'";
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        rs = state.executeQuery(query);
+        while(rs.next()){
+            id = rs.getInt(1);
+        }
+        return id;
     }
 }

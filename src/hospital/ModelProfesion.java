@@ -52,4 +52,12 @@ public class ModelProfesion {
         state = conn.createStatement();
         state.executeQuery(query);
     }
+    
+    public int getIdbyName(String name) throws SQLException{
+        String query = "SELECT * FROM public.profesion WHERE nombre = '"+name+"'";
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
+    }
 }

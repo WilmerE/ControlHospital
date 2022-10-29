@@ -241,7 +241,7 @@ public class Registro extends javax.swing.JFrame {
 
     //FILL COMBOBOX USERS
     public void fillCombUsr() throws SQLException{
-        ResultSet rs = ModelUser.selectAllUser();
+        ResultSet rs = ModelUser.selectAll();
         select_user.removeAllItems();
         select_user.addItem("---Seleccionar---");
         while(rs.next()){
@@ -253,7 +253,7 @@ public class Registro extends javax.swing.JFrame {
     public void fillCombEnf() throws SQLException{
         ModelEnfermedad connect = new ModelEnfermedad();
         connect.getConexion();
-        ResultSet rs = ModelEnfermedad.selectAllEnfermedades();
+        ResultSet rs = ModelEnfermedad.selectAll();
         select_enf.removeAllItems();
         select_enf.addItem("---Seleccionar---");
         while(rs.next()){

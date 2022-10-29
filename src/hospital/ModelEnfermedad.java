@@ -40,16 +40,17 @@ public class ModelEnfermedad {
         return conn;
     }
     
-    public static ResultSet selectAllEnfermedades()throws SQLException{
+    public static ResultSet selectAll()throws SQLException{
         String query = "SELECT * FROM public.enfermedad";
         state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
         rs = state.executeQuery(query);
         return rs;
     }
     
-    public static void insert(String nombre)throws SQLException{
+    public static ResultSet insert(String nombre)throws SQLException{
         String query = "INSERT INTO public.enfermedad(nombre) VALUES ('"+nombre+"')";
         state = conn.createStatement();
-        state.executeQuery(query);
+        rs = state.executeQuery(query);
+        return rs;
     }
 }

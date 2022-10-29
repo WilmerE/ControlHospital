@@ -54,9 +54,19 @@ public class ModelMunicipio {
         return rs;
     }
     
-    public static void insert(int id_dept, String nombre)throws SQLException{
-        String query = "INSERT INTO public.municipio(id_departamento, nombre) VALUES ("+id_dept+",'"+nombre+"')";
+    public int insert(int id_dept, String nombre)throws SQLException{
+        String query = "INSERT INTO public.municipio(id_departamento, nombre) VALUES ("+id_dept+",'"+nombre+"') RETURNING id_municipio";
         state = conn.createStatement();
-        state.executeQuery(query);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
+    }
+    
+    public int getIdbyName(String name) throws SQLException{
+        String query = "SELECT * FROM public.municipio WHERE nombre = '"+name+"'";
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        rs = state.executeQuery(query);
+        rs.next();
+        return rs.getInt(1);
     }
 }

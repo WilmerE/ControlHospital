@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author wilme
  */
-public class ModelDepartamento {
+public class ModelLenguaUser {
     private final String HOST = "localhost";
     private final String PUERTO = "5432";
     private final String DB = "hospital";
@@ -28,6 +28,7 @@ public class ModelDepartamento {
     private static ResultSet rs;
     
     public Connection getConexion(){
+        
         try {
             Class.forName("org.postgresql.Driver");
             String url ="jdbc:postgresql://"+HOST+":"+PUERTO+"/"+DB;
@@ -40,26 +41,9 @@ public class ModelDepartamento {
         return conn;
     }
     
-    public static ResultSet selectAll()throws SQLException{
-        String query = "SELECT * FROM public.departamento";
-        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
-        rs = state.executeQuery(query);
-        return rs;
-    }
-    
-    public int insert(String nombre)throws SQLException{
-        String query = "INSERT INTO public.departamento(nombre) VALUES ('"+nombre+"') RETURNING id_departamento";
+    public void insert(int id_user, int id_lengua)throws SQLException{
+        String query = "INSERT INTO public.user_lengua(id_user, id_alergia) VALUES ("+id_user+",'"+id_lengua+"')";
         state = conn.createStatement();
-        rs = state.executeQuery(query);
-        rs.next();
-        return rs.getInt(1);
-    }
-    
-    public int getIdbyName(String name) throws SQLException{
-        String query = "SELECT * FROM public.departamento WHERE nombre = '"+name+"'";
-        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
-        rs = state.executeQuery(query);
-        rs.next();
-        return rs.getInt(1);
+        state.executeQuery(query);
     }
 }
