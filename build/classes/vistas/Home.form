@@ -36,7 +36,7 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="btn_levelSchools" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btn_lenguas" alignment="0" max="32767" attributes="0"/>
@@ -74,9 +74,9 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lb_welcome" min="-2" pref="360" max="-2" attributes="0"/>
-                              <EmptySpace pref="621" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lb_welcome" min="-2" pref="697" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="lb_rol" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -207,7 +207,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btn_municipios">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Municipios."/>
+        <Property name="text" type="java.lang.String" value="Municipios"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lb_rol">

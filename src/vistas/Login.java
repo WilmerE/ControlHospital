@@ -97,6 +97,7 @@ public class Login extends javax.swing.JFrame {
         LoginClass oauth = new LoginClass();
         try {
             oauth.auth(username, pass);
+            this.setVisible(false);
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
