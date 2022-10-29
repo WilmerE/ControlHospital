@@ -4,6 +4,19 @@
  */
 package vistas;
 
+import hospital.ModelAlergia;
+import hospital.ModelDepartamento;
+import hospital.ModelGrupo;
+import hospital.ModelLengua;
+import hospital.ModelMunicipio;
+import hospital.ModelNivel;
+import hospital.ModelProfesion;
+import hospital.ModelTipo;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author wilme
@@ -13,8 +26,16 @@ public class FormUser extends javax.swing.JFrame {
     /**
      * Creates new form FormUser
      */
-    public FormUser() {
+    public FormUser() throws SQLException {
         initComponents();
+        fillCombAlg();
+        fillCombTipo();
+        fillCombGrupos();
+        fillCombLenguas();
+        fillCombNivelEsc();
+        fillCombProfesion();
+        fillCombDept();
+        fillCombMuni();
     }
 
     /**
@@ -66,7 +87,7 @@ public class FormUser extends javax.swing.JFrame {
         select_nivelEsc = new javax.swing.JComboBox<>();
         select_prof = new javax.swing.JComboBox<>();
         select_dept = new javax.swing.JComboBox<>();
-        select_mun = new javax.swing.JComboBox<>();
+        select_muni = new javax.swing.JComboBox<>();
         select_rol = new javax.swing.JComboBox<>();
         select_estado = new javax.swing.JComboBox<>();
         btn_addAlergia = new javax.swing.JButton();
@@ -89,8 +110,6 @@ public class FormUser extends javax.swing.JFrame {
         jButton17 = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();
         jButton20 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lb_title.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lb_title.setText("Ingreso de usuario");
@@ -243,7 +262,7 @@ public class FormUser extends javax.swing.JFrame {
                             .addComponent(select_nivelEsc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(select_prof, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(select_dept, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(select_mun, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(select_muni, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt_residencia)
                             .addComponent(select_rol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(select_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -333,7 +352,7 @@ public class FormUser extends javax.swing.JFrame {
                                     .addComponent(jLabel12)))
                             .addGap(26, 26, 26)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(select_mun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(select_muni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButton7)
                                 .addComponent(jButton17)
                                 .addComponent(jLabel18))
@@ -416,6 +435,102 @@ public class FormUser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //FILL COMBOBOX ALERGIAS
+    public void fillCombAlg() throws SQLException{
+        ModelAlergia connect = new ModelAlergia();
+        connect.getConexion();
+        ResultSet rs = ModelAlergia.selectAllAlergias();
+        select_alergia.removeAllItems();
+        select_alergia.addItem("---Seleccionar---");
+        while(rs.next()){
+            select_alergia.addItem(rs.getString(2));
+        }
+    }
+    
+    //FILL COMBOBOX TIPO SANGRE
+    public void fillCombTipo() throws SQLException{
+        ModelTipo connect = new ModelTipo();
+        connect.getConexion();
+        ResultSet rs = ModelTipo.selectAllTipos();
+        select_tipoSangre.removeAllItems();
+        select_tipoSangre.addItem("---Seleccionar---");
+        while(rs.next()){
+            select_tipoSangre.addItem(rs.getString(2));
+        }
+    }
+    
+    //FILL COMBOBOX GRUPO ETNICO
+    public void fillCombGrupos() throws SQLException{
+        ModelGrupo connect = new ModelGrupo();
+        connect.getConexion();
+        ResultSet rs = ModelGrupo.selectAllGrupos();
+        select_grupoEt.removeAllItems();
+        select_grupoEt.addItem("---Seleccionar---");
+        while(rs.next()){
+            select_grupoEt.addItem(rs.getString(2));
+        }
+    }
+    
+    //FILL COMBOBOX LENGUAS
+    public void fillCombLenguas() throws SQLException{
+        ModelLengua connect = new ModelLengua();
+        connect.getConexion();
+        ResultSet rs = ModelLengua.selectAll();
+        select_lengua.removeAllItems();
+        select_lengua.addItem("---Seleccionar---");
+        while(rs.next()){
+            select_lengua.addItem(rs.getString(2));
+        }
+    }
+    
+    //FILL COMBOBOX NIVEL ESCOLAR
+    public void fillCombNivelEsc() throws SQLException{
+        ModelNivel connect = new ModelNivel();
+        connect.getConexion();
+        ResultSet rs = ModelNivel.selectAll();
+        select_nivelEsc.removeAllItems();
+        select_nivelEsc.addItem("---Seleccionar---");
+        while(rs.next()){
+            select_nivelEsc.addItem(rs.getString(2));
+        }
+    }
+    
+    //FILL COMBOBOX PROFESION
+    public void fillCombProfesion() throws SQLException{
+        ModelProfesion connect = new ModelProfesion();
+        connect.getConexion();
+        ResultSet rs = ModelProfesion.selectAll();
+        select_prof.removeAllItems();
+        select_prof.addItem("---Seleccionar---");
+        while(rs.next()){
+            select_prof.addItem(rs.getString(2));
+        }
+    }
+    
+    //FILL COMBOBOX DEPARTAMENTO
+    public void fillCombDept() throws SQLException{
+        ModelDepartamento connect = new ModelDepartamento();
+        connect.getConexion();
+        ResultSet rs = ModelDepartamento.selectAll();
+        select_dept.removeAllItems();
+        select_dept.addItem("---Seleccionar---");
+        while(rs.next()){
+            select_dept.addItem(rs.getString(2));
+        }
+    }
+    
+    //FILL COMBOBOX MUNICIPIO
+    public void fillCombMuni() throws SQLException{
+        ModelMunicipio connect = new ModelMunicipio();
+        connect.getConexion();
+        ResultSet rs = ModelMunicipio.selectAll();
+        select_muni.removeAllItems();
+        select_muni.addItem("---Seleccionar---");
+        while(rs.next()){
+            select_muni.addItem(rs.getString(3));
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -446,7 +561,11 @@ public class FormUser extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormUser().setVisible(true);
+                try {
+                    new FormUser().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FormUser.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -500,7 +619,7 @@ public class FormUser extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> select_genero;
     private javax.swing.JComboBox<String> select_grupoEt;
     private javax.swing.JComboBox<String> select_lengua;
-    private javax.swing.JComboBox<String> select_mun;
+    private javax.swing.JComboBox<String> select_muni;
     private javax.swing.JComboBox<String> select_nivelEsc;
     private javax.swing.JComboBox<String> select_prof;
     private javax.swing.JComboBox<String> select_rol;

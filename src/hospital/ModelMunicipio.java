@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author wilme
  */
-public class ModelEnfermedad {
+public class ModelMunicipio {
     private final String HOST = "localhost";
     private final String PUERTO = "5432";
     private final String DB = "hospital";
@@ -40,15 +40,22 @@ public class ModelEnfermedad {
         return conn;
     }
     
-    public static ResultSet selectAllEnfermedades()throws SQLException{
-        String query = "SELECT * FROM public.enfermedad";
+    public static ResultSet selectAll()throws SQLException{
+        String query = "SELECT * FROM public.municipio";
         state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
         rs = state.executeQuery(query);
         return rs;
     }
     
-    public static void insert(String nombre)throws SQLException{
-        String query = "INSERT INTO public.enfermedad(nombre) VALUES ('"+nombre+"')";
+    public static ResultSet byDept(String nombre_dept)throws SQLException{
+        String query = "SELECT m.id_municipio, m.nombre FROM public.municipio m INNER JOIN public.departamento d ON d.id_departamento = m.id_departamento WHERE d.nombre = '"+nombre_dept+"'";
+        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
+        rs = state.executeQuery(query);
+        return rs;
+    }
+    
+    public static void insert(int id_dept, String nombre)throws SQLException{
+        String query = "INSERT INTO public.municipio(id_departamento, nombre) VALUES ("+id_dept+",'"+nombre+"')";
         state = conn.createStatement();
         state.executeQuery(query);
     }
