@@ -4,7 +4,8 @@
  */
 package vistas;
 
-import hospital.ModelUsers;
+import hospital.ModelEnfermedad;
+import hospital.ModelUser;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -21,7 +22,8 @@ public class Registro extends javax.swing.JFrame {
      */
     public Registro() throws SQLException {
         initComponents();
-        fillComb();
+        fillCombUsr();
+        fillCombEnf();
     }
 
     /**
@@ -47,6 +49,10 @@ public class Registro extends javax.swing.JFrame {
         txt_fecha_final = new javax.swing.JTextField();
         btn_cancel = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
+        btn_addEnf = new javax.swing.JButton();
+        btn_addUsr = new javax.swing.JButton();
+        btn_updateUsr = new javax.swing.JButton();
+        btn_updateEnf = new javax.swing.JButton();
 
         setTitle("Registro");
         setPreferredSize(new java.awt.Dimension(1024, 640));
@@ -57,7 +63,7 @@ public class Registro extends javax.swing.JFrame {
         lb_title.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lb_selectp.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lb_selectp.setText("Seleccionar Paciente");
+        lb_selectp.setText("Paciente");
 
         select_user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +88,34 @@ public class Registro extends javax.swing.JFrame {
 
         btn_save.setText("Guardar");
 
+        btn_addEnf.setText("+");
+        btn_addEnf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addEnfActionPerformed(evt);
+            }
+        });
+
+        btn_addUsr.setText("+");
+        btn_addUsr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addUsrActionPerformed(evt);
+            }
+        });
+
+        btn_updateUsr.setText("Actualizar");
+        btn_updateUsr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateUsrActionPerformed(evt);
+            }
+        });
+
+        btn_updateEnf.setText("Actualizar");
+        btn_updateEnf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateEnfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,36 +123,42 @@ public class Registro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lb_obs)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lb_title)
+                        .addGap(49, 49, 49))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txt_obs, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(select_user, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                                .addComponent(lb_title))
-                            .addComponent(select_enf, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lb_selectp, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lb_enf, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
-                                    .addComponent(txt_fecha_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_fecha_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btn_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(66, 66, 66)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btn_save, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txt_fecha_final))
-                                .addGap(1, 1, 1)))
-                        .addGap(32, 32, 32))))
+                                    .addComponent(txt_fecha_final, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lb_obs)
+                                        .addComponent(lb_selectp)
+                                        .addComponent(lb_enf)
+                                        .addComponent(select_user, 0, 420, Short.MAX_VALUE)
+                                        .addComponent(select_enf, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(btn_addUsr)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btn_updateUsr))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(btn_addEnf)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(btn_updateEnf))))
+                                .addComponent(txt_obs, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,11 +168,21 @@ public class Registro extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lb_selectp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(select_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lb_enf)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(select_enf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(select_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lb_enf)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(select_enf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_addUsr)
+                            .addComponent(btn_updateUsr))
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_addEnf)
+                            .addComponent(btn_updateEnf))))
                 .addGap(18, 18, 18)
                 .addComponent(lb_obs)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -145,11 +195,11 @@ public class Registro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_fecha_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fecha_final))
-                .addGap(47, 47, 47)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_save, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                    .addComponent(btn_cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(32, 32, 32))
+                    .addComponent(btn_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_cancel, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
+                .addGap(61, 61, 61))
         );
 
         pack();
@@ -160,14 +210,58 @@ public class Registro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_select_userActionPerformed
 
-    //FILL COMBOBOX
-    public void fillComb() throws SQLException{
-        ModelUsers users = new ModelUsers();
-        ResultSet rs = users.selectAllUser();
+    private void btn_addEnfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addEnfActionPerformed
+        // TODO add your handling code here:
+        FormEnfermedad openForm = new FormEnfermedad();
+        openForm.setVisible(true);
+    }//GEN-LAST:event_btn_addEnfActionPerformed
+
+    private void btn_updateEnfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateEnfActionPerformed
+        try {
+            // TODO add your handling code here:
+            fillCombEnf();
+        } catch (SQLException ex) {
+            Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_updateEnfActionPerformed
+
+    private void btn_addUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addUsrActionPerformed
+        // TODO add your handling code here:
+        FormUser openForm = new FormUser();
+        openForm.setVisible(true);
+    }//GEN-LAST:event_btn_addUsrActionPerformed
+
+    private void btn_updateUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateUsrActionPerformed
+        try {
+            // TODO add your handling code here:
+            fillCombUsr();
+        } catch (SQLException ex) {
+            Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_updateUsrActionPerformed
+
+    //FILL COMBOBOX USERS
+    public void fillCombUsr() throws SQLException{
+        ResultSet rs = ModelUser.selectAllUser();
+        select_user.removeAllItems();
+        select_user.addItem("---Seleccionar---");
         while(rs.next()){
             select_user.addItem(rs.getString(5)+", "+rs.getString(7));
         }
     }
+    
+    //FILL COMBOBOX ENFERMEDADES
+    public void fillCombEnf() throws SQLException{
+        ModelEnfermedad connect = new ModelEnfermedad();
+        connect.getConexion();
+        ResultSet rs = ModelEnfermedad.selectAllEnfermedades();
+        select_enf.removeAllItems();
+        select_enf.addItem("---Seleccionar---");
+        while(rs.next()){
+            select_enf.addItem(rs.getString(2));
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -208,8 +302,12 @@ public class Registro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_addEnf;
+    private javax.swing.JButton btn_addUsr;
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_save;
+    private javax.swing.JButton btn_updateEnf;
+    private javax.swing.JButton btn_updateUsr;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextArea jTextArea1;

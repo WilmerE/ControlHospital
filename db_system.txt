@@ -1,0 +1,239 @@
+CREATE TABLE public."alergia"
+(
+    id_alergia INT GENERATED ALWAYS AS IDENTITY,
+    nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_alergia)
+);
+
+CREATE TABLE public."tipo_sangre"
+(
+    id_tipo_sangre INT GENERATED ALWAYS AS IDENTITY,
+    nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_tipo_sangre)
+);
+
+CREATE TABLE public."grupo_etnico"
+(
+    id_grupo_etnico INT GENERATED ALWAYS AS IDENTITY,
+    nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_grupo_etnico)
+);
+
+CREATE TABLE public."lengua"
+(
+    id_lengua INT GENERATED ALWAYS AS IDENTITY,
+    nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_lengua)
+);
+
+CREATE TABLE public."nivel_escolar"
+(
+    id_nivel_escolar INT GENERATED ALWAYS AS IDENTITY,
+    nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_nivel_escolar)
+);
+
+CREATE TABLE public."profesion"
+(
+    id_profesion INT GENERATED ALWAYS AS IDENTITY,
+    nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_profesion)
+);
+
+CREATE TABLE public."departamento"
+(
+    id_departamento INT GENERATED ALWAYS AS IDENTITY,
+    nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_departamento)
+);
+
+CREATE TABLE public."municipio"
+(
+    id_municipio INT GENERATED ALWAYS AS IDENTITY,
+	id_departamento INT,
+    nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_municipio),
+	CONSTRAINT fk_departamento
+      FOREIGN KEY(id_departamento) 
+	  REFERENCES departamento(id_departamento)
+);
+
+CREATE TABLE public."user"
+(
+    id_user INT GENERATED ALWAYS AS IDENTITY,
+    username VARCHAR(100) NOT NULL,
+    pass VARCHAR(255) NOT NULL,
+	correlativo VARCHAR(255) NOT NULL,
+	primer_apellido VARCHAR(15) NOT NULL,
+	segundo_apellido VARCHAR(15) NOT NULL,
+	nombres VARCHAR(25) NOT NULL,
+	dpi VARCHAR(15) NOT NULL UNIQUE,
+	genero boolean,
+	fecha_nacimiento date NOT NULL,
+	lugar_nacimiento VARCHAR(50) NOT NULL,
+	id_alergia INT,
+	id_tipo_sangre INT,
+	id_grupo_etnico INT,
+	id_lengua INT,
+	id_nivel_escolar INT,
+	id_profesion INT,
+	id_dept INT,
+	id_municipio INT,
+	residencia VARCHAR(50),
+    status boolean,
+    rol INT NOT NULL,
+    PRIMARY KEY (id_user),
+	CONSTRAINT fk_alergia
+      FOREIGN KEY(id_alergia) 
+	  REFERENCES alergia(id_alergia),
+	CONSTRAINT fk_tipo_sangre
+      FOREIGN KEY(id_tipo_sangre) 
+	  REFERENCES tipo_sangre(id_tipo_sangre),
+	CONSTRAINT fk_grupo_etnico
+      FOREIGN KEY(id_grupo_etnico) 
+	  REFERENCES grupo_etnico(id_grupo_etnico),
+	CONSTRAINT fk_lengua
+      FOREIGN KEY(id_lengua) 
+	  REFERENCES lengua(id_lengua),
+	CONSTRAINT fk_nivel_escolar
+      FOREIGN KEY(id_nivel_escolar) 
+	  REFERENCES nivel_escolar(id_nivel_escolar),
+	CONSTRAINT fk_profesion
+      FOREIGN KEY(id_profesion) 
+	  REFERENCES profesion(id_profesion),
+	CONSTRAINT fk_dept
+      FOREIGN KEY(id_dept) 
+	  REFERENCES departamento(id_departamento),
+	CONSTRAINT fk_municipio
+      FOREIGN KEY(id_municipio) 
+	  REFERENCES municipio(id_municipio)
+);
+
+CREATE TABLE public."telefono"
+(
+    id_telefono INT GENERATED ALWAYS AS IDENTITY,
+	id_user INT,
+    numero VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id_telefono),
+	CONSTRAINT fk_user
+      FOREIGN KEY(id_user) 
+	  REFERENCES "user"(id_user)
+);
+
+CREATE TABLE public."email"
+(
+    id_email INT GENERATED ALWAYS AS IDENTITY,
+	id_user INT,
+    email VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id_email),
+	CONSTRAINT fk_user
+      FOREIGN KEY(id_user) 
+	  REFERENCES "user"(id_user)
+);
+
+CREATE TABLE public."user_alergia"
+(
+    id_u_a INT GENERATED ALWAYS AS IDENTITY,
+	id_user INT,
+	id_alergia INT,
+    PRIMARY KEY (id_u_t),
+	CONSTRAINT fk_user
+      FOREIGN KEY(id_user) 
+	  REFERENCES "user"(id_user),
+	CONSTRAINT fk_alergia
+      FOREIGN KEY(id_alergia) 
+	  REFERENCES alergia(id_alergia)
+);
+
+CREATE TABLE public."user_lengua"
+(
+    id_u_l INT GENERATED ALWAYS AS IDENTITY,
+	id_user INT,
+	id_lengua INT,
+    PRIMARY KEY (id_u_l),
+	CONSTRAINT fk_user
+      FOREIGN KEY(id_user) 
+	  REFERENCES "user"(id_user),
+	CONSTRAINT fk_lengua
+      FOREIGN KEY(id_lengua) 
+	  REFERENCES lengua(id_lengua)
+);
+
+CREATE TABLE public."rol"(
+	id_rol INT GENERATED ALWAYS AS IDENTITY,
+	nombre VARCHAR(25) NOT NULL,
+	PRIMARY KEY (id_rol)
+)
+
+CREATE TABLE public."enfermedad"(
+	id_enfermedad INT GENERATED ALWAYS AS IDENTITY,
+	nombre VARCHAR(50) NOT NULL,
+	PRIMARY KEY (id_enfermedad)
+);
+
+CREATE TABLE public."diagnostico"(
+	id_diagnostico INT GENERATED ALWAYS AS IDENTITY,
+	id_user INT NOT NULL,
+	id_enfermedad INT NOT NULL,
+	fh_ingreso DATE,
+	fh_retiro DATE,
+	PRIMARY KEY (id_diagnostico),
+	CONSTRAINT fk_user
+      FOREIGN KEY(id_user) 
+	  REFERENCES "user"(id_user),
+	CONSTRAINT fk_enfermedad
+      FOREIGN KEY(id_enfermedad) 
+	  REFERENCES enfermedad(id_enfermedad)
+)
+
+INSERT INTO public.rol(nombre) VALUES ('Paciente');
+INSERT INTO public.rol(nombre) VALUES ('Administrador');
+
+INSERT INTO public.enfermedad(nombre) VALUES ('Fractura');
+INSERT INTO public.enfermedad(nombre) VALUES ('Gastritis');
+INSERT INTO public.enfermedad(nombre) VALUES ('Meningitis');
+
+INSERT INTO public.departamento(nombre) VALUES ('Alta Verapaz');
+INSERT INTO public.departamento(nombre) VALUES ('Baja Verapaz');
+INSERT INTO public.departamento(nombre) VALUES ('Chimaltenango');
+INSERT INTO public.departamento(nombre) VALUES ('Chiquimula');
+INSERT INTO public.departamento(nombre) VALUES ('El Progreso');
+INSERT INTO public.departamento(nombre) VALUES ('Escuintla');
+INSERT INTO public.departamento(nombre) VALUES ('Departamento de Guatemala');
+INSERT INTO public.departamento(nombre) VALUES ('Huehuetenango');
+INSERT INTO public.departamento(nombre) VALUES ('Izabal');
+INSERT INTO public.departamento(nombre) VALUES ('Jalapa');
+INSERT INTO public.departamento(nombre) VALUES ('Jutiapa');
+INSERT INTO public.departamento(nombre) VALUES ('Petén');
+INSERT INTO public.departamento(nombre) VALUES ('Quetzaltenango');
+INSERT INTO public.departamento(nombre) VALUES ('Retalhuleu');
+INSERT INTO public.departamento(nombre) VALUES ('Sacatepéquez');
+INSERT INTO public.departamento(nombre) VALUES ('Petén');
+INSERT INTO public.departamento(nombre) VALUES ('San Marcos');
+INSERT INTO public.departamento(nombre) VALUES ('Santa Rosa');
+INSERT INTO public.departamento(nombre) VALUES ('Sololá');
+INSERT INTO public.departamento(nombre) VALUES ('Suchitepéquez');
+INSERT INTO public.departamento(nombre) VALUES ('Totonicapán');
+INSERT INTO public.departamento(nombre) VALUES ('Zacapa');
+
+INSERT INTO public.grupo_etnico(nombre) VALUES ('Kiche');
+INSERT INTO public.grupo_etnico(nombre) VALUES ('Qeqchi');
+INSERT INTO public.grupo_etnico(nombre) VALUES ('Kakchiquel');
+INSERT INTO public.grupo_etnico(nombre) VALUES ('Mam');
+
+INSERT INTO public.nivel_escolar(nombre) VALUES ('Kinder');
+INSERT INTO public.nivel_escolar(nombre) VALUES ('Primaria');
+INSERT INTO public.nivel_escolar(nombre) VALUES ('Básico');
+INSERT INTO public.nivel_escolar(nombre) VALUES ('Diversificado');
+INSERT INTO public.nivel_escolar(nombre) VALUES ('Licenciatura');
+INSERT INTO public.nivel_escolar(nombre) VALUES ('Maestría');
+INSERT INTO public.nivel_escolar(nombre) VALUES ('Doctorado');
+
+INSERT INTO public.tipo_sangre(nombre) VALUES ('A');
+INSERT INTO public.tipo_sangre(nombre) VALUES ('B');
+INSERT INTO public.tipo_sangre(nombre) VALUES ('AB');
+INSERT INTO public.tipo_sangre(nombre) VALUES ('O');
+
+INSERT INTO public."user"(
+	username, pass, correlativo, primer_apellido, segundo_apellido, nombres, dpi, genero, fecha_nacimiento, lugar_nacimiento, id_alergia, id_tipo_sangre, id_grupo_etnico, id_lengua, id_nivel_escolar, id_profesion, id_dept, id_municipio, residencia, status, rol)
+	VALUES ('admin', 'root', '123456', 'Pelicó', 'Amador', 'Wilmer Eulices', '3362-44657-1904', true, '2007-09-12 01:02:50', 'Gualán', null, null, null, null, null, null, null, null, null, true, 1);

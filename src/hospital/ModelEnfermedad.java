@@ -5,9 +5,9 @@
 package hospital;
 
 import java.awt.HeadlessException;
-import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author wilme
  */
-public class ModelUsers {
+public class ModelEnfermedad {
     private final String HOST = "localhost";
     private final String PUERTO = "5432";
     private final String DB = "hospital";
@@ -41,16 +41,16 @@ public class ModelUsers {
         return conn;
     }
     
-    public static ResultSet verificar(String sql)throws SQLException{
-        state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
-        rs = state.executeQuery(sql);
-        return rs;
-    }
-    
-    public static ResultSet selectAllUser()throws SQLException{
-        String query = "SELECT * FROM public.user WHERE rol = 2";
+    public static ResultSet selectAllEnfermedades()throws SQLException{
+        String query = "SELECT * FROM public.enfermedad";
         state = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,rs.CONCUR_READ_ONLY);
         rs = state.executeQuery(query);
         return rs;
+    }
+    
+    public static void insert(String nombre)throws SQLException{
+        String query = "INSERT INTO public.enfermedad(nombre) VALUES ('"+nombre+"')";
+        state = conn.createStatement();
+        state.executeQuery(query);
     }
 }

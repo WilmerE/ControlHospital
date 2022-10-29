@@ -23,7 +23,7 @@ public class LoginClass {
     private String nombres;
     private int rol;
     
-    ModelUsers userc = new ModelUsers();
+    ModelUser userc = new ModelUser();
     
     public void auth(String username, String pass){
         pass_crypt = getMd5(pass);

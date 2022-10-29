@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/db_connection/Conection.java</file>
-            <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/hospital/UserLog.java</file>
-            <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/hospital/LoginClass.java</file>
-            <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/vistas/Login.java</file>
-            <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/vistas/Home.java</file>
+            <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/hospital/ModelEnfermedad.java</file>
+            <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/vistas/FormEnfermedad.java</file>
+            <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/hospital/ModelUser.java</file>
             <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/vistas/FormUser.java</file>
             <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/vistas/Registro.java</file>
-            <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/hospital/ModelUsers.java</file>
             <file>file:/C:/Users/wilme/OneDrive/Documentos/NetBeansProjects/Hospital/src/hospital/Hospital.java</file>
         </group>
     </open-files>
