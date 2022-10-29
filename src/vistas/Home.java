@@ -90,6 +90,11 @@ public class Home extends javax.swing.JFrame {
 
         btn_registro.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btn_registro.setText("Nuevo Registro");
+        btn_registro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registroActionPerformed(evt);
+            }
+        });
 
         jTextField1.setText("Fecha Inicio");
 
@@ -226,6 +231,12 @@ public class Home extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void btn_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registroActionPerformed
+        // TODO add your handling code here:
+        Registro rg = new Registro();
+        rg.setVisible(true);
+    }//GEN-LAST:event_btn_registroActionPerformed
 
     /**
      * @param args the command line arguments

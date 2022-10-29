@@ -4,6 +4,12 @@
  */
 package vistas;
 
+import hospital.ModelUsers;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author wilme
@@ -13,8 +19,9 @@ public class Registro extends javax.swing.JFrame {
     /**
      * Creates new form Registro
      */
-    public Registro() {
+    public Registro() throws SQLException {
         initComponents();
+        fillComb();
     }
 
     /**
@@ -53,6 +60,11 @@ public class Registro extends javax.swing.JFrame {
         lb_selectp.setText("Seleccionar Paciente");
 
         select_user.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        select_user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                select_userActionPerformed(evt);
+            }
+        });
 
         lb_enf.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lb_enf.setText("Enfermedad");
@@ -144,8 +156,22 @@ public class Registro extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void select_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_select_userActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_select_userActionPerformed
+
+    //FILL COMBOBOX
+    public void fillComb() throws SQLException{
+        ModelUsers users = new ModelUsers();
+        ResultSet rs = users.selectAllUser();
+        
+        while(rs.next()){
+            select_user.addItem(rs.getString(5)+", "+rs.getString(7));
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -176,7 +202,11 @@ public class Registro extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Registro().setVisible(true);
+                try {
+                    new Registro().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
